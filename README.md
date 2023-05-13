@@ -1,4 +1,4 @@
-# rakamin-jubelio-final
+# RAKAMIN ACADEMY | JUBELIO | FINAL CHALLENGE | SELENIUM-PYTHON-ALLURE BEHAVE-BDD
 Selenium with Python Behave (BDD) | Allure Reports
 This repository mentioned to the Rakamin Academy | Jubelio | Virtual Iinternship Experience Program, for the Final Challenge/Assignments.
 
