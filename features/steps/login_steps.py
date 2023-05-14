@@ -6,7 +6,6 @@ import common.login_creds as LoginCreds
 import common.constants as Constants
 
 
-
 @given('User is on Jubelio login page')
 def on_login_page(self):
     self.driver = webdriver.Chrome()
