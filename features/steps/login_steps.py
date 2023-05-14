@@ -6,7 +6,6 @@ import common.login_creds as LoginCreds
 import common.constants as Constants
 
 
-# You can implement step definitions for undefined steps with these snippets:
 
 @given('User is on Jubelio login page')
 def on_login_page(self):
