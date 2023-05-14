@@ -6,6 +6,8 @@ import common.login_creds as LoginCreds
 import common.constants as Constants
 
 
+# You can implement step definitions for undefined steps with these snippets:
+
 @given('User is Already logged in')
 def user_login(self):
     self.driver = webdriver.Chrome()
@@ -27,8 +29,8 @@ def user_login(self):
     time.sleep(2)
 
 
-@when('User Click on "Barang", Select "Katalog" and "In Review" Menu')
-def click_menu(self):
+@when('User Click on Barang, Select Katalog and In Review Menu')
+def step_impl(self):
     self.driver.find_element(By.CSS_SELECTOR, Constants.MTSMENU_BARANG).click()
     self.driver.find_element(By.CSS_SELECTOR, Constants.MTSMENU_KATALOG).click()
     self.driver.find_element(By.CSS_SELECTOR, Constants.MTSMENU_IN_REVIEW).click()
@@ -36,28 +38,42 @@ def click_menu(self):
     assert 'In Review' in REVIEW_PAGE_TITLE
 
 
-@when('User Enter SKU Code with "HJUEID" in Search')
-def enter_sku_code(self):
+@when('User Enter SKU Code with "{SKU}" in Search')
+def step_impl(self, SKU):
     # ENTER_SKU = self.driver.find_element(By.CSS_SELECTOR, Constants.INREVIEW_SEARCHBAR).send_keys('HJUEID')
     # ENTER_SKU.send_keys(Keys.ENTER)
-    self.driver.find_element(By.CSS_SELECTOR, Constants.INREVIEW_SEARCHBAR).send_keys('HJUEID')
+    self.driver.find_element(By.CSS_SELECTOR, Constants.INREVIEW_SEARCHBAR).send_keys(SKU)
     self.driver.find_element(By.CSS_SELECTOR, Constants.INREVIEW_SEARCHBAR_ICON).click()
     time.sleep(4)
-    self.driver.find_element(By.CSS_SELECTOR, Constants.INREVIEW_FILTERED_ITEM_RESULT).click()
+
+
+@then('User Will See a Desired Item')
+def step_impl(self):
     DESIRED_SKU = self.driver.find_element(By.CSS_SELECTOR, 'item-box').text
     assert "HJUEID" in DESIRED_SKU
 
 
-@then('User Will Edit and Enter the desired Value in "Batas Stok Menipis" Field')
-def edit_stock(self):
+@when('User Select and Click on the Item')
+def step_impl(self):
+    self.driver.find_element(By.CSS_SELECTOR, Constants.INREVIEW_FILTERED_ITEM_RESULT).click()
+
+
+@then('User Will Redirected to "In Review" Page')
+def step_impl(self):
+    PAGE_TITLE = self.driver.find_element(By.CSS_SELECTOR, 'item-box').text
+    assert "In Review" in PAGE_TITLE
+
+
+@then('User Will Edit and Enter the desired Value in Batas Stok Menipis Field')
+def step_impl(self):
     self.driver.find_element(By.CSS_SELECTOR, ".b-t:nth-child(3) .form-control").click()
     time.sleep(1)
     self.driver.find_element(By.CSS_SELECTOR, ".b-t:nth-child(3) .form-control").send_keys("25")
     time.sleep(1)
 
 
-@then('User will Click on "Simpan" and Will be notify with "Data Berhasil Disimpan"')
-def verify_update(self):
+@then('User will Click on Simpan and Will be notify with Data Berhasil Disimpan')
+def step_impl(self):
     self.driver.find_element(By.CSS_SELECTOR, ".btn-primary > .ladda-label").click()
     SUCCESS_ALERT = self.driver.find_element(By.CSS_SELECTOR, ".app-alert > li").text
     assert "Data berhasil disimpan." in SUCCESS_ALERT

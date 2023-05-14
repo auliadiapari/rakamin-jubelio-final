@@ -2,11 +2,8 @@ Feature: Manage Stock
   https://app.jubelio.com/login
 
   Scenario: Arrange and Managing Stock Item Amount
-    Given User is Already logged in
-    When User Click on "Barang", Select "Katalog" and "In Review" Menu
-    And User Enter SKU Code with "HJUEID" in Search
-    Then User Will See a Desired Item
-    When User Select and Click on the Item
-    Then User Will Redirected to "In Review" Page
-    And User Will Edit and Enter the desired Value in "Batas Stok Menipis" Field
-    And User will Click on "Simpan" and Will be notify with "Data Berhasil Disimpan"
+    Given User is Already logged in and navigated
+    When User search item by SKU code with "HJUEID"
+    And User will edit and enter value for managing stock
+    Then User will be notify after save the value
+
