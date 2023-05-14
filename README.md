@@ -5,3 +5,7 @@ This repository mentioned to the Rakamin Academy | Jubelio | Virtual Iinternship
 Then you will need the following:
 1. selenium
 2. allure-behave
+
+After the mentioned dependencies installed, run with:
+
+behave features\ 
