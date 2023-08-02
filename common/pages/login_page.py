@@ -10,7 +10,7 @@ class LoginPage:
 
         # Initiate browser
         self.driver = webdriver.Chrome()
-        self.drive.maximize_window()
+        self.driver.maximize_window()
         self.driver.get(LoginCreds.URL)
 
         # Verify login page
