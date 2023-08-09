@@ -1,37 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import common.login_creds as LoginCreds
-import common.constants as Constants
+from common.pages.base_page import BasePageUsers, BasePageLocators
 
 # Initiate browser, verify page title, login with valid credentials, click login, redirect to homepage
 
-class LoginPage:
+class LoginPage(BasePageUsers, BasePageLocators):
     def on_login_page(self):
 
         # Initiate browser
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        self.driver.get(LoginCreds.URL)
+        self.driver.get(BasePageUsers.URL)
 
         # Verify login page
-        pagetitle = self.driver.title
+        pageTitle = self.driver.title
         try:
-            assert 'Jubelio' == pagetitle
+            assert 'Jubelio' == pageTitle
             print('Successfull loaded to login page')
         except:
-            assert 'Jubelio' != pagetitle
+            assert 'Jubelio' != pageTitle
             print('Unsuccessfull loaded to login page')
 
     def input_email_and_password(self, email, password):
         
         # Login with valid credentials
-        self.driver.find_element(By.NAME, Constants.txt_email).send_keys(email)
-        self.driver.find_element(By.NAME, Constants.txt_password).send_keys(password)
+        self.driver.find_element(By.NAME, BasePageLocators.EMAIL_FIELD).send_keys(email)
+        self.driver.find_element(By.NAME, BasePageLocators.PASSWORD_FIELD).send_keys(password)
 
     def click_login(self):
 
         # Click login
-        clicklogin = self.driver.find_element(By.CLASS_NAME, Constants.btn_login)
+        clicklogin = self.driver.find_element(By.CLASS_NAME, BasePageLocators.LOGIN_BUTTON)
         clicklogin.click()
 
     def redirected_to_homepage(self):

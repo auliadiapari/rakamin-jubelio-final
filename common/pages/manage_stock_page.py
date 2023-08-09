@@ -1,27 +1,23 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait as Wait
-from selenium.webdriver.support.expected_conditions import e
-import common.login_creds as LoginCreds
-import common.constants as Constants
+from selenium.webdriver.support.ui import WebDriverWait as Wait
+from selenium.webdriver.support import expected_conditions as EC
+from common.pages.base_page import BasePageUsers, BasePageLocators
+
 
 # Initiate browser, Verify page title, loggin with valid credentials, click login, redirected to homepage
 # User already logged in and navigated to SKU/Product Search, Search item by SKU, Edit and managing stock, save after edit and verfy save success
 
 
-class ManageStock:
+class ManageStock(BasePageUsers, BasePageLocators):
     def user_logged_in_and_navigated(self):
-
-        # Valid Credentials
-        validUsername = 'qa.rakamin.jubelio@gmail.com'
-        validPasswrod = 'Jubelio123!'
 
         # User already logged in and navigated to Product Search Page
             # Initiate browser
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        self.driver.get(LoginCreds.URL)
+        self.driver.get(BasePageUsers.URL)
 
             # Verify login page
         pagetitle = self.driver.title
@@ -33,20 +29,20 @@ class ManageStock:
             print('Unsuccessfull loaded to login page')
 
             # Login with valid credentials
-        self.driver.find_element(By.NAME, Constants.txt_email).send_keys(validUsername)
-        self.driver.find_element(By.NAME, Constants.txt_password).send_keys(validPasswrod)
-        clickLogin = self.driver.find_element(By.CLASS_NAME, Constants.btn_login)
+        self.driver.find_element(By.NAME, BasePageLocators.EMAIL_FIELD).send_keys(BasePageUsers.VALID_EMAIL)
+        self.driver.find_element(By.NAME, BasePageLocators.PASSWORD_FIELD).send_keys(BasePageUsers.VALID_PASSWORD)
+        clickLogin = self.driver.find_element(By.CLASS_NAME, BasePageLocators.LOGIN_BUTTON)
         clickLogin.click()
         
             # navigate to Product Search Page via Menu
-        self.driver.find_element(By.CSS_SELECTOR, Constants.MTSMENU_BARANG).click()
-        self.driver.find_element(By.CSS_SELECTOR, Constants.MTSMENU_KATALOG).click()
-        self.driver.find_element(By.CSS_SELECTOR, Constants.MTSMENU_IN_REVIEW).click()
+        self.driver.find_element(By.CSS_SELECTOR, BasePageLocators.MTSMENU_BARANG).click()
+        self.driver.find_element(By.CSS_SELECTOR, BasePageLocators.MTSMENU_KATALOG).click()
+        self.driver.find_element(By.CSS_SELECTOR, BasePageLocators.MTSMENU_IN_REVIEW).click()
     
     def search_item(self, SKU):
         
         # User enter SKU id in search bar
-        searchSKU = self.driver.find_element(By.CLASS_NAME, Constants.INREVIEW_SEARCHBAR)
+        searchSKU = self.driver.find_element(By.CLASS_NAME, BasePageLocators.INREVIEW_SEARCHBAR)
         searchSKU.send_keys('HJUEID')
         searchSKU.send_keys(Keys.ENTER)
         self.driver.implicitly_wait(1)
@@ -56,7 +52,7 @@ class ManageStock:
         assert "HJUEID" in selectedSKU
         print('The item shown is right')
         self.driver.implicitly_wait(2)
-        self.driver.find_element(By.CLASS_NAME, Constants.INREVIEW_FILTERED_ITEM_RESULT).click()
+        self.driver.find_element(By.CLASS_NAME, BasePageLocators.INREVIEW_FILTERED_ITEM_RESULT).click()
     
     def managing_stock(self):
 
